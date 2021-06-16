@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Password Generator</title>
+</head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+    async function getSHA256HexAsync(message) {
+        const msgUint8 = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+        return hashHex;
+    }
+
+    async function update() {
+        let nameElement = document.getElementById("name");
+        let mainPasswordElement = document.getElementById("main-password");
+        let generatedElement = document.getElementById("generated-password");
+        let salt = "&rLp5gWWnH6&j*@wHn6S";
+        let inputValue = GetName(nameElement.value) + mainPasswordElement.value + salt;
+        let hexValue = await getSHA256HexAsync(inputValue);
+        let inputValueNow = GetName(nameElement.value) + mainPasswordElement.value + salt;
+        if (inputValue == inputValueNow) {
+            generatedElement.value = hexValue.substr(0, 16).toUpperCase() + "+1aA";
+        }
+    }
+
+    function GetName(val) {
+        val = val.toLowerCase();
+
+        if (val.startsWith("https://")) {
+            val = val.substr(8);
+        }
+        if (val.startsWith("http://")) {
+            val = val.substr(7);
+        }
+        if (val.includes("/")) {
+            val = val.substr(0, val.indexOf("/"))
+        }
+        if (val.includes(".")) {
+            val = val.substr(0, val.lastIndexOf("."))
+        }
+        if (val.includes(".")) {
+            val = val.substr(val.indexOf(".") + 1)
+        }
+        return val
+    }
+
+    function copyGeneratedPassword() {
+        let copyText = document.getElementById("generated-password");
+        copyText.select();
+        copyText.setSelectionRange(0, 30);
+        document.execCommand("copy");
+        alert("Password was copied.");
+    }
+
+    function ShowPassword() {
+        var element = document.getElementById('main-password');
+        if (element.type == 'text') {
+            element.type = 'password';
+        } else {
+            element.type = 'text';
+        }
+    }
+</script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 1rem;
+        background-color: #484B51;
+    }
+
+    input[type=text],
+    input[type=password] {
+        background-color: #FEFEFE;
+    }
+
+    input[type=text],
+    input[type=button],
+    input[type=password] {
+        width: 100%;
+        display: inline-block;
+        box-sizing: border-box;
+    }
+
+    input:read-only {
+        border-style: dotted;
+    }
+
+    form {
+        border-radius: 1rem;
+        background-color: #f2f2f2;
+        padding: 2rem;
+    }
+
+    .container {
+        max-width: 25rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #generated-password {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <form>
+            <p>
+                <label for="name">Name</label>
+                <input type="text" id="name" oninput="update()" autocapitalize="none" autofocus>
+            </p>
+
+            <p>
+                <label for="main-password">Main Password</label>
+                <input type="password" id="main-password" oninput="update()">
+                <label>
+                    <input type="checkbox" id="show-password" onclick="ShowPassword()">Show Password
+                </label>                
+            </p>
+
+            <p>
+                <label for="generated-password">Generated Password</label>
+                <input type="text" id="generated-password" readonly>
+            </p>
+
+            <p>
+                <input type="button" id="copy-button" onclick="copyGeneratedPassword()" value="Copy Generated Password">
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>
