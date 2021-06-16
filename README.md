@@ -25,3 +25,7 @@ requirements I recommend using a professional password manager
 such as [BitWarden](https://bitwarden.com).
 
 A similar app can be found here: https://ss64.com/pass
+
+![Screenshot](screenshot.png)
+
+![Mobile](mobile.png)
