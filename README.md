@@ -19,4 +19,9 @@ The name is always converted to lower case.
 Ensure to use a [strong password](https://en.wikipedia.org/wiki/Password_strength)
 to prevent [password cracking](https://en.wikipedia.org/wiki/Password_cracking).
 
+This password generator should only be used for services with
+low security requirements. For services with higher security
+requirements I recommend using a professional password manager
+such as [BitWarden](https://bitwarden.com).
+
 A similar app can be found here: https://ss64.com/pass
