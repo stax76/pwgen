@@ -29,3 +29,11 @@ A similar app can be found here: https://ss64.com/pass
 ![Screenshot](screenshot.png)
 
 ![Mobile](mobile.png)
+
+
+Related apps
+------------
+
+Find a list of related apps:
+
+https://stax76.github.io/frankskare
