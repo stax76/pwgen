@@ -21,6 +21,10 @@ if ($name.Contains(".")) {
     $name = $name.Substring($name.IndexOf(".") + 1)
 }
 
+write ""
+write "Name:     $name"
+write ""
+
 $mainPassword = Read-Host 'Enter the main password'
 $str = $name + $mainPassword + '&rLp5gWWnH6&j*@wHn6S'
 $algo = [System.Security.Cryptography.SHA256]::Create()
@@ -31,9 +35,6 @@ $pw = $hexStrings | Join-String
 $pw = $pw.Substring(0, 16) + '+1aA'
 $pw | Set-Clipboard
 
-write ""
-write "Name:     $name"
-write ""
 write "Password: $pw"
 write ""
 write 'The password was copied to the clipboard.'
